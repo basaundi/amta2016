@@ -171,7 +171,7 @@ def main(l_s=L_S, l_t=L_T, l_a=L_A, validation_set=VALIDATION_SET, test_set=TEST
 
 
 if __name__ == '__main__':
-    name = 'nmt_aux_wmt15'
+    name = 'amta16'
     cwd = ander.env.set_workspace(name=name, persistent=True, scriptname=False)
     print(cwd)
     main(L_S, L_T, L_A, VALIDATION_SET, TEST_SET, PARALLEL_SRC_TGT, PARALLEL_AUX_TGT, MONOLINGUAL_SRC)

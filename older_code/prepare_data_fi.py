@@ -29,7 +29,7 @@ L_S, L_A, L_T = "en", "fr", "fi"
 
 
 if __name__ == '__main__':
-    name = 'nmt_aux_wmt15_fi'
+    name = 'amta16_fi'
     cwd = ander.env.set_workspace(name=name, persistent=True, scriptname=False)
     print(cwd)
     main(L_S, L_T, L_A, VALIDATION_SET, TEST_SET, PARALLEL_SRC_TGT, PARALLEL_AUX_TGT, MONOLINGUAL_SRC, reverse=True)
