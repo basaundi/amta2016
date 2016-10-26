@@ -77,24 +77,14 @@ class Decoder(Parametric):
 
     def _mangle_y_index(self, values, y):
         y_flat = y.flatten()
-        # FIXME: Nnapa
-        if False:
-            idx = arange(y_flat.shape[0]) * values.shape[-1] + self.wid[y_flat]
-            return values.flatten()[idx].reshape(y.shape)
-        else:
-            idx = arange(y_flat.shape[0]) * values.shape[-1] + y_flat
-            return values.flatten()[idx].reshape(y.shape)
+        idx = arange(y_flat.shape[0]) * values.shape[-1] + y_flat
+        return values.flatten()[idx].reshape(y.shape)
 
     def _scores(self, ci, state, prev_word_emb):
         tni = self._target_vector(ci, state, prev_word_emb)
         ti = reshape(tni, tni.shape[0], tni.shape[1], tni.shape[2] // 2, 2).max(axis=-1)
-        # FIXME: Nnapa
-        if False:
-            Wo2 = ifelse(self.candidates.shape[0], self.Wo2[:, self.candidates], self.Wo2)
-            bWo = ifelse(self.candidates.shape[0], self.bWo[self.candidates], self.bWo)
-        else:
-            Wo2 = self.Wo2
-            bWo = self.bWo
+        Wo2 = self.Wo2
+        bWo = self.bWo
         scores = dot(dot(ti, self.Wo1), Wo2) + bWo
         return scores
 

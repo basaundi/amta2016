@@ -12,7 +12,6 @@ def hooks(trainer_cls):
     # FIXME: pre-configure validation set path
     valid_set = Data('../valid.set')
 
-    # FIXME: nnapa
     if hasattr(trainer_cls, "print_status"):
         fields = ('iterations_done', 'epochs_done', 'samples_done',
                             'x_words_done', 'y_words_done', 'time_pulling_data', 'time_training',

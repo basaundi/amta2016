@@ -135,8 +135,6 @@ class Validator(ScheduledTask):
         ss, st = zip(*iter(self.data))
         original_candidate_list = self.observable.model.get_target_vocabulary()
         try:
-            if False:  # FIXME: Nnapa
-                self.observable.model.set_target_vocabulary(self.candidates)
             score, precisions, brevity_penalty, candidate_total_length, references_closes_length = \
                     multi_bleu(self._map(ss), (self._map_target(st),), tokenize_lower, 4)
         finally:

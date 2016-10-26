@@ -17,11 +17,9 @@ class AugmentedTranslationModel2(AugmentedTranslationModel):
         self.parameter('model_src_aux', self.submodel_cls(encoder_cls=UniformEncoder,
                                                           decoder_cls=UniformDecoder, **kwargs))
         self.parameter('model_tgt_tgt', self.submodel_cls(encoder_cls=UniformEncoder,
-                                                          decoder_cls=UniformDecoder, **kwargs))
-        # FIXME: Nnapa epica
+                                                
         self.model_aux_tgt = self.model_src_aux
         self.model_src_src = self.model_tgt_tgt
-        # /Nnapa
         self.model_src_aux.encoder = self.model_src_tgt.encoder
         self.model_tgt_tgt.decoder = self.model_src_tgt.decoder
         self.encoder = self.model_src_tgt.encoder
@@ -109,17 +107,4 @@ class MultiScheduler2(MultiScheduler):
         self.parameter('src_src_scheduler', SubBatchScheduler(self, model.model_src_src, prefix='mono'), override=True)
 
     def set_vocabulary(self):
-        # FIXME: Nnapa
-        return False
-        if False:
-            merged = set()
-            if self.src_tgt_scheduler.current_section:
-                merged |= self.src_tgt_scheduler.current_section.vocabulary_tgt
-            if self.src_src_scheduler.current_section:
-                merged |= self.src_src_scheduler.current_section.vocabulary_tgt
-            merged_list = list(merged)
-            merged_list.sort()
-            self.model.model_src_tgt.set_target_vocabulary(merged_list)
-        else:
-            merged_list = range(len(self.model.model_src_tgt.decoder.target_vocabulary))
-            self.model.model_src_tgt.set_target_vocabulary(merged_list)
+        pass

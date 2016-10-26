@@ -222,14 +222,10 @@ class BatchScheduler(Parametric):
             print("Shuffling minibatches.")
             shuffle(self.current_section.minibatches)
             self.current_section.save()
-        if False:  # Fixme: Nnapa
-            self._set_vocabulary()
         self.current_section_name = section_name
 
     def _set_vocabulary(self):
-        # FIXME: Nnapa
-        return False
-        self.model.set_target_vocabulary(list(self.current_section.vocabulary_tgt))
+        pass
 
 
 class BilingualBatchScheduler(Parametric):

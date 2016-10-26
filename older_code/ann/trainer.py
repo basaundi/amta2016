@@ -39,7 +39,6 @@ class Trainer(Parametric):
         self.parameter('last_time_triggered', {})
         self.last_cost = None
         self.last_minibatch = None
-        # FIXME: Nnapa
         self.last_minibatch_origin = 0
 
         self.initialized = False

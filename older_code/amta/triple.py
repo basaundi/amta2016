@@ -58,20 +58,12 @@ class AugmentedTranslationModel(Parametric):
 
     def __init__(self, **kwargs):
         super(AugmentedTranslationModel, self).__init__(**kwargs)
-        if False:
-            self.parameter('model_src_tgt', self.submodel_cls(encoder_cls=UniformEncoder,
-                                                              decoder_cls=UniformDecoder, **kwargs))
-            self.parameter('model_aux_tgt', self.submodel_cls(encoder_cls=UniformEncoder,
-                                                              decoder_cls=UniformDecoder, **kwargs))
-            self.parameter('model_src_src', self.submodel_cls(encoder_cls=UniformEncoder,
-                                                              decoder_cls=UniformDecoder, **kwargs))
-        else:
-            self.parameter('model_src_tgt', self.submodel_cls(encoder_cls=ProjectionEncoder,
-                                                              decoder_cls=Decoder, **kwargs))
-            self.parameter('model_aux_tgt', self.submodel_cls(encoder_cls=ProjectionEncoder,
-                                                              decoder_cls=Decoder, **kwargs))
-            self.parameter('model_src_src', self.submodel_cls(encoder_cls=ProjectionEncoder,
-                                                              decoder_cls=Decoder, **kwargs))
+        self.parameter('model_src_tgt', self.submodel_cls(encoder_cls=ProjectionEncoder,
+                                                          decoder_cls=Decoder, **kwargs))
+        self.parameter('model_aux_tgt', self.submodel_cls(encoder_cls=ProjectionEncoder,
+                                                          decoder_cls=Decoder, **kwargs))
+        self.parameter('model_src_src', self.submodel_cls(encoder_cls=ProjectionEncoder,
+                                                          decoder_cls=Decoder, **kwargs))
         self.model_aux_tgt.decoder = self.model_src_tgt.decoder
         self.model_src_src.encoder = self.model_src_tgt.encoder
         self.encoder = self.model_src_tgt.encoder
@@ -126,9 +118,7 @@ class SubBatchScheduler(BatchScheduler):
         self.parent = parent
 
     def _set_vocabulary(self):
-        print("_set_vocabulary on subscheduler")
-        return False  # FIXME: Nnapa
-        self.parent.set_vocabulary()
+        pass
 
 
 class MultiScheduler(Parametric):
@@ -151,21 +141,7 @@ class MultiScheduler(Parametric):
                 self.src_src_scheduler.get_next())
 
     def set_vocabulary(self):
-        # FIXME: Nnapa
-        return False
-        if False:
-            merged = set()
-            if self.src_tgt_scheduler.current_section:
-                merged |= self.src_tgt_scheduler.current_section.vocabulary_tgt
-            if self.aux_tgt_scheduler.current_section:
-                merged |= self.aux_tgt_scheduler.current_section.vocabulary_tgt
-            merged_list = list(merged)
-            merged_list.sort()
-            self.model.model_src_tgt.set_target_vocabulary(merged_list)
-        else:
-            merged_list = range(len(self.model.model_src_tgt.decoder.target_vocabulary))
-            self.model.model_src_tgt.set_target_vocabulary(merged_list)
-
+        pass
 
 class JointOptimizer(Adadelta):
     def __init__(self, model, **kwargs):
